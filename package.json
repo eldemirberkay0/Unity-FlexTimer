@@ -1,0 +1,13 @@
+{
+  "name": "com.eldemirberkay0.flextimer",
+  "version": "1.0.0",
+  "displayName": "FlexTimer",
+  "description": "",
+  "unity": "2022.3",
+  "keywords": [
+  ],
+  "author": {
+    "name": "Berkay Eldemir",
+    "url": "https://github.com/eldemirberkay0"
+  }
+}
