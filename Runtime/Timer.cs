@@ -3,45 +3,15 @@ using UnityEngine;
 
 namespace FlexTimer
 {
-    public class Timer
+    public abstract class Timer
     {
         public Action OnFinished;
-        public bool IsRunning { get; private set; } = false;
-        protected float duration;
-        protected float timePassed;
-
-        public Timer(float duration)
-        {
-            this.duration = duration;
-        }
-
-        public Timer(float duration, Action OnFinished)
-        {
-            this.duration = duration;
-            this.OnFinished += OnFinished;
-        }
-
-        internal protected virtual void Tick()
-        {
-            if (IsRunning) { timePassed += Time.deltaTime; }
-            if (timePassed >= duration) { Stop(); }
-        }
-
-        public void Start()
-        {
-            TimerManager.RegisterTimer(this);
-            IsRunning = true;
-        }
-
-        public void Pause() => IsRunning = false;
+        public bool IsScaled { get; protected set; } = true;
+        public bool IsRunning { get; protected set; } = false;
+        internal abstract void Update();
+        internal abstract void Finish();
+        public abstract void Start();
+        public void Pause() => IsRunning = false; 
         public void Resume() => IsRunning = true;
-
-        public void Stop()
-        {
-            OnFinished?.Invoke();
-            TimerManager.RemoveTimer(this);
-            IsRunning = false;
-            OnFinished = null;
-        }
     }
 }
