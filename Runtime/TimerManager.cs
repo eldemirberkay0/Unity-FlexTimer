@@ -6,7 +6,7 @@ namespace FlexTimer
 {
     public static class TimerManager
     {
-        private static List<Timer> timers = new List<Timer>();
+        internal static List<Timer> timers = new List<Timer>();
 
         internal static void UpdateTimers()
         {
@@ -17,9 +17,9 @@ namespace FlexTimer
         internal static void RemoveTimer(Timer timer) => timers.Remove(timer);
 
         // Direct manager registration, reduces control on timer but it is more practical
-        public static void RegisterEvent(float delay, Action action)
+        public static void RegisterEvent(float delay, Action action, int tickCount = 1, bool isLooped = false, bool isScaled = true)
         {
-            CountdownTimer timer = new CountdownTimer(delay, action);
+            Timer timer = new Timer(delay, action, tickCount, isLooped, isScaled);
             timer.Start();
         }
     }
