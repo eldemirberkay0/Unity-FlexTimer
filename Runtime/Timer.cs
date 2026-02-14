@@ -10,8 +10,11 @@ namespace FlexTimer
         public float SecondsToTickNormalized => Mathf.Clamp(secondsToTick / tickDuration, 0, 1);
         public float SecondsToFinishNormalized => Mathf.Clamp((secondsToTick + (tickCount - 1) * tickDuration) / (tickCount * tickDuration), 0, 1);
 
+        /// <summary> This event invokes when no ticks remained. </summary>
         public Action OnFinished;
+        /// <summary> This event invokes on each timer tick. </summary>
         public Action OnTick;
+
         public bool IsScaled { get; private set; } = true;
         public bool IsRunning { get; private set; } = false;
         public bool IsLooped { get; private set; } = false;
@@ -20,6 +23,12 @@ namespace FlexTimer
         private float tickDuration;
         private float secondsToTick;
 
+        /// <summary> Creates a timer with various parameters. </summary>
+        /// <param name="tickDuration"> Duration (second) of each tick. </param>
+        /// <param name="OnTick"> The action will happen on timer tick. null by default. </param>
+        /// <param name="tickCount"> How many times the timer will tick. 1 by default. </param>
+        /// <param name="isLooped"> Ticks forever if true. Overries tickCount if true. False by default. </param>
+        /// <param name="isScaled"> Uses Time.unscaledDeltaTime if false. True by default. </param>
         public Timer(float tickDuration, Action OnTick = null, int tickCount = 1, bool isLooped = false, bool isScaled = true)
         {
             this.tickDuration = tickDuration;
@@ -29,6 +38,7 @@ namespace FlexTimer
             IsScaled = isScaled;
         }
 
+        /// <summary> Registers timer to timer manager and starts the timer. </summary>
         public void Start()
         {
             if (!TimerManager.timers.Contains(this))
@@ -70,7 +80,9 @@ namespace FlexTimer
             TimerManager.RemoveTimer(this);
         }
 
-        public void Pause() => IsRunning = false; 
+        /// <summary> Set IsRunning = false. </summary>
+        public void Pause() => IsRunning = false;
+        /// <summary> Set IsRunning = true. </summary>
         public void Resume() => IsRunning = true;
     }
 }

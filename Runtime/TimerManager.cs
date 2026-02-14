@@ -16,10 +16,15 @@ namespace FlexTimer
         internal static void RegisterTimer(Timer timer) => timers.Add(timer);
         internal static void RemoveTimer(Timer timer) => timers.Remove(timer);
 
-        // Direct manager registration, reduces control on timer but it is more practical
-        public static void RegisterEvent(float delay, Action action, int tickCount = 1, bool isLooped = false, bool isScaled = true)
+        /// <summary> Creates a timer with an event attached to it and starts timer directly. </summary>
+        /// <param name="duration"> Duration (second) of each tick. </param>
+        /// <param name="action"> The action will happen on timer tick. </param>
+        /// <param name="tickCount"> How many times the timer will tick. 1 by default. </param>
+        /// <param name="isLooped"> Ticks forever if true. Overries tickCount if true. False by default. </param>
+        /// <param name="isScaled"> Uses Time.unscaledDeltaTime if false. True by default. </param>
+        public static void RegisterEvent(float duration, Action action, int tickCount = 1, bool isLooped = false, bool isScaled = true)
         {
-            Timer timer = new Timer(delay, action, tickCount, isLooped, isScaled);
+            Timer timer = new Timer(duration, action, tickCount, isLooped, isScaled);
             timer.Start();
         }
     }
