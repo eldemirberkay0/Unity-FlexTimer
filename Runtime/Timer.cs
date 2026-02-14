@@ -10,7 +10,7 @@ namespace FlexTimer
         public float SecondsToTickNormalized => Mathf.Clamp(secondsToTick / tickDuration, 0, 1);
         public float SecondsToFinishNormalized => Mathf.Clamp((secondsToTick + (tickCount - 1) * tickDuration) / (tickCount * tickDuration), 0, 1);
 
-        /// <summary> This event invokes when no ticks remained. </summary>
+        /// <summary> This event invokes when no ticks left. </summary>
         public Action OnFinished;
         /// <summary> This event invokes on each timer tick. </summary>
         public Action OnTick;
@@ -38,7 +38,6 @@ namespace FlexTimer
             IsScaled = isScaled;
         }
 
-        /// <summary> Registers timer to timer manager and starts the timer. </summary>
         public void Start()
         {
             if (!TimerManager.timers.Contains(this))
@@ -80,9 +79,7 @@ namespace FlexTimer
             TimerManager.RemoveTimer(this);
         }
 
-        /// <summary> Set IsRunning = false. </summary>
         public void Pause() => IsRunning = false;
-        /// <summary> Set IsRunning = true. </summary>
         public void Resume() => IsRunning = true;
     }
 }

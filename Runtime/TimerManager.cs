@@ -27,5 +27,17 @@ namespace FlexTimer
             Timer timer = new Timer(duration, action, tickCount, isLooped, isScaled);
             timer.Start();
         }
+
+        /// <summary> Removes all timers and clears their delegates. Suggested to use while changing scene. </summary>
+        public static void RemoveAllTimers()
+        {
+            foreach (Timer timer in timers.ToList()) 
+            { 
+                timer.Pause();
+                timer.OnFinished = null; 
+                timer.OnTick = null; 
+            }
+            timers.Clear();
+        }
     }
 }
