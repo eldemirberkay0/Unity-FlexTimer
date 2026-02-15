@@ -29,11 +29,12 @@ namespace FlexTimer
         /// <summary> Removes all timers and clears their delegates. Suggested to use while changing scene. </summary>
         public static void RemoveAllTimers()
         {
-            foreach (Timer timer in timers.ToList())
+            for (int i = timers.Count - 1; i >= 0; i--)
             {
-                timer.Pause();
-                timer.OnFinished = null;
-                timer.OnTick = null;
+                timers[i].Pause();
+                timers[i].OnFinished = null;
+                timers[i].OnTick = null;
+                timers[i].OnUpdate = null;
             }
             timers.Clear();
         }
