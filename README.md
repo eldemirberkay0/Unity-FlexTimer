@@ -1,5 +1,5 @@
 # Unity-FlexTimer
-A flexible timer package for Unity running on Unity player loop, meaning no MonoBehavior is required. Alternative to Coroutines and spagetti Update() loops with bunch of time variables and if checks.
+A flexible timer package with zero runtime allocation for Unity running on Unity player loop, meaning no MonoBehavior is required. Alternative to Coroutines and spagetti Update() loops with bunch of time variables and if checks.
 
 ## Includes
 * **TimerManager:** Holds timers in a list and updates them in every frame. Also responsible with some practical event registration.
