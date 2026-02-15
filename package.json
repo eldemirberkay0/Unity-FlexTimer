@@ -2,12 +2,16 @@
   "name": "com.eldemirberkay0.flextimer",
   "version": "1.0.0",
   "displayName": "FlexTimer",
-  "description": "",
+  "description": "A flexible timer package for Unity running on Unity player loop, alternative to Coroutines and spagetti Update() loops.",
   "unity": "2022.3",
   "keywords": [
+    "timer",
+    "flex-timer",
+    "time-manager"
   ],
   "author": {
     "name": "Berkay Eldemir",
     "url": "https://github.com/eldemirberkay0"
-  }
+  },
+  "dependencies": {}
 }

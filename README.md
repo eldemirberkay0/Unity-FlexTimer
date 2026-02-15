@@ -42,6 +42,7 @@ A flexible timer package for Unity running on Unity player loop, meaning no Mono
 
 While using with constructor you have to use timer.Start() manually to run the timer.
 ```csharp
+    // Note: This function is a member of Timer.
     /// <summary> Registers timer to TimerManager and sets IsRunning true. </summary>
     public void Start()
     {
@@ -56,7 +57,7 @@ While using with constructor you have to use timer.Start() manually to run the t
 
 You can attach actions while creating the timer or later.
 
-While constructing:
+While creating:
 ```csharp
     // Create a timer with a duration of 2 seconds and an action attached to it.
     Timer timer = new Timer(2, () => Debug.Log("Ticked")); 
@@ -69,7 +70,7 @@ While constructing:
     }
 ```
 
-After construction:
+After creating:
 ```csharp
     // Create a timer with a duration of 2 seconds and no actions attached
     Timer timer = new Timer(2);
