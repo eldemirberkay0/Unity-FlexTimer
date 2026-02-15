@@ -82,7 +82,15 @@ namespace FlexTimer
             OnUpdate = null;
             OnFinished?.Invoke();
             OnFinished = null;
+        }
+        
+        public void Cancel()
+        {
             TimerManager.RemoveTimer(this);
+            IsRunning = false;
+            OnTick = null;
+            OnUpdate = null;
+            OnFinished = null;
         }
 
         public void Pause() => IsRunning = false;

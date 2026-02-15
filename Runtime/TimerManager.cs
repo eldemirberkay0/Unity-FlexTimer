@@ -18,13 +18,11 @@ namespace FlexTimer
 
         /// <summary> Creates a timer with an event attached to it and starts timer directly. </summary>
         /// <param name="duration"> Duration (second) of each tick. </param>
-        /// <param name="action"> The action will happen on timer tick. </param>
-        /// <param name="tickCount"> How many times the timer will tick. 1 by default. </param>
-        /// <param name="isLooped"> Ticks forever if true. Overries tickCount if true. False by default. </param>
+        /// <param name="action"> Invokes on timer tick. </param>
         /// <param name="isScaled"> Uses Time.unscaledDeltaTime if false. True by default. </param>
-        public static void RegisterEvent(float duration, Action action, int tickCount = 1, bool isLooped = false, bool isScaled = true)
+        public static void RegisterEvent(float duration, Action action, bool isScaled = true)
         {
-            Timer timer = new Timer(duration, action, null, null, tickCount, isLooped, isScaled);
+            Timer timer = new Timer(duration, action, null, null, 1, false, isScaled);
             timer.Start();
         }
 
