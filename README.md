@@ -17,7 +17,7 @@ A flexible timer package for Unity running on Unity player loop, meaning no Mono
     * And more to get timer's current situation like SecondsToTick, SecondsToFinish and normalized versions of these.
 
 ## How to Use
-### Creating Timer Manually
+### Creating Timer Manually With Constructor
  Using Timer directly with constructor provides more flexibility. You can set many properties as you like or leave them default.
 ```csharp
     /// <summary> Creates a timer with various parameters. </summary>
@@ -85,7 +85,7 @@ After creating:
     }
 ```
 
-### Using TimerManager for basic needs
+### Using TimerManager for Basic Needs
 If you just want to trigger an action after a delay you can use TimerManager.RegisterEvent(). This function creates a basic timer and starts it directly. This method prevents access to timer and reduces control over timer but it is more practical.
 
 TimerManager.RegisterEvent():
