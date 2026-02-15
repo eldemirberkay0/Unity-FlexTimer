@@ -18,7 +18,7 @@ namespace FlexTimer
         public bool IsScaled { get; private set; } = true;
         public bool IsRunning { get; private set; } = false;
         public bool IsLooped { get; private set; } = false;
-        
+
         private int tickCount;
         private float tickDuration;
         private float secondsToTick;
@@ -42,6 +42,7 @@ namespace FlexTimer
             IsScaled = isScaled;
         }
 
+        /// <summary> Registers timer to TimerManager and sets IsRunning true. </summary>
         public void Start()
         {
             if (!TimerManager.timers.Contains(this))
@@ -61,20 +62,20 @@ namespace FlexTimer
                 if (secondsToTick <= 0) { Tick(); }
             }
         }
-        
+
         private void Tick()
         {
             OnTick?.Invoke();
             tickCount--;
-            if (tickCount <= 0 && !IsLooped)  
-            { 
-                Finish(); 
+            if (tickCount <= 0 && !IsLooped)
+            {
+                Finish();
                 return;
             }
             secondsToTick = tickDuration;
         }
 
-        private  void Finish()
+        private void Finish()
         {
             TimerManager.RemoveTimer(this);
             IsRunning = false;
@@ -83,7 +84,8 @@ namespace FlexTimer
             OnFinished?.Invoke();
             OnFinished = null;
         }
-        
+
+        /// <summary> Stops timer and clears it's references. </summary>
         public void Cancel()
         {
             TimerManager.RemoveTimer(this);
