@@ -9,11 +9,11 @@ namespace FlexTimer
         public float SecondsToFinish => Mathf.Clamp(secondsToTick + (tickCount - 1) * tickDuration, 0, tickDuration * tickCount);
         public float SecondsToTickNormalized => Mathf.Clamp(secondsToTick / tickDuration, 0, 1);
         public float SecondsToFinishNormalized => Mathf.Clamp((secondsToTick + (tickCount - 1) * tickDuration) / (tickCount * tickDuration), 0, 1);
+        public int TicksRemaining => tickCount;
 
-        /// <summary> This event invokes when no ticks left. </summary>
-        public Action OnFinished;
-        /// <summary> This event invokes on each timer tick. </summary>
+        public Action OnUpdate;
         public Action OnTick;
+        public Action OnFinished;
 
         public bool IsScaled { get; private set; } = true;
         public bool IsRunning { get; private set; } = false;
@@ -25,14 +25,18 @@ namespace FlexTimer
 
         /// <summary> Creates a timer with various parameters. </summary>
         /// <param name="tickDuration"> Duration (second) of each tick. </param>
-        /// <param name="OnTick"> The action will happen on timer tick. null by default. </param>
+        /// <param name="OnTick"> The action invokes on timer tick. Null by default. </param>
+        /// <param name="OnFinished"> The action invokes when no ticks left. Null by default. </param>
+        /// <param name="OnUpdate"> The action invokes every timer update. Null by default. </param>
         /// <param name="tickCount"> How many times the timer will tick. 1 by default. </param>
-        /// <param name="isLooped"> Ticks forever if true. Overries tickCount if true. False by default. </param>
+        /// <param name="isLooped"> Ticks forever if true. Overrides tickCount if true. False by default. </param>
         /// <param name="isScaled"> Uses Time.unscaledDeltaTime if false. True by default. </param>
-        public Timer(float tickDuration, Action OnTick = null, int tickCount = 1, bool isLooped = false, bool isScaled = true)
+        public Timer(float tickDuration, Action OnTick = null, Action OnFinished = null, Action OnUpdate = null, int tickCount = 1, bool isLooped = false, bool isScaled = true)
         {
             this.tickDuration = tickDuration;
             this.OnTick += OnTick;
+            this.OnFinished += OnFinished;
+            this.OnUpdate += OnUpdate;
             this.tickCount = tickCount;
             IsLooped = isLooped;
             IsScaled = isScaled;
@@ -53,6 +57,7 @@ namespace FlexTimer
             if (IsRunning)
             {
                 secondsToTick -= IsScaled ? Time.deltaTime : Time.unscaledDeltaTime;
+                OnUpdate?.Invoke();
                 if (secondsToTick <= 0) { Tick(); }
             }
         }
@@ -74,6 +79,7 @@ namespace FlexTimer
             TimerManager.RemoveTimer(this);
             IsRunning = false;
             OnTick = null;
+            OnUpdate = null;
             OnFinished?.Invoke();
             OnFinished = null;
             TimerManager.RemoveTimer(this);

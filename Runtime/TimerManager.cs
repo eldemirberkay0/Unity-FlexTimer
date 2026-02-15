@@ -24,7 +24,7 @@ namespace FlexTimer
         /// <param name="isScaled"> Uses Time.unscaledDeltaTime if false. True by default. </param>
         public static void RegisterEvent(float duration, Action action, int tickCount = 1, bool isLooped = false, bool isScaled = true)
         {
-            Timer timer = new Timer(duration, action, tickCount, isLooped, isScaled);
+            Timer timer = new Timer(duration, action, null, null, tickCount, isLooped, isScaled);
             timer.Start();
         }
 
