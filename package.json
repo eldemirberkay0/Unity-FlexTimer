@@ -2,17 +2,29 @@
   "name": "com.eldemirberkay0.flextimer",
   "version": "1.0.0",
   "displayName": "FlexTimer",
-  "description": "A flexible timer package for Unity running on Unity player loop, alternative to Coroutines and spagetti Update() loops.",
+  "description": "A flexible timer package for Unity running on Unity \nplayer loop, alternative to Coroutines and spagetti \nUpdate() loops.",
   "unity": "2022.3",
   "keywords": [
     "timer",
     "flex-timer",
     "time-manager",
-    "zero-runtime-allocation"
+    "zero-runtime-allocation",
+    "player-loop"
+  ],
+  "samples": [
+    {
+      "displayName": "Custom Fixed Update",
+      "description": "Example implementation of a custom fixed update system.",
+      "path": "Samples~/CustomFixedUpdate"
+    },
+    {
+      "displayName": "Smooth Cooldown",
+      "description": "Example use case for timer's OnUpdate callbacks.",
+      "path": "Samples~/SmoothCooldown"
+    }
   ],
   "author": {
     "name": "Berkay Eldemir",
     "url": "https://github.com/eldemirberkay0"
-  },
-  "dependencies": {}
+  }
 }

@@ -84,7 +84,8 @@ After creating:
         // Logs "Ticked" after 2 seconds
     }
 ```
-
+*There are more examples at [Samples Folder](/Samples~).*
+***
 ### Using TimerManager for Basic Needs
 If you just want to trigger an action after a delay you can use TimerManager.RegisterEvent(). This function creates a basic timer and starts it directly. This method prevents access to timer and reduces control over timer but it is more practical.
 
