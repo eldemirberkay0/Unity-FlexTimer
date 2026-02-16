@@ -1,0 +1,16 @@
+{
+    "name": "FlexTimer.Samples",
+    "rootNamespace": "",
+    "references": [
+        "GUID:d8abdc5d185671a4193d7c1450e212ea"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
