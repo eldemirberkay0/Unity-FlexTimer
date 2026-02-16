@@ -131,4 +131,6 @@ There are three ways to install this package into your Unity project:
 1. Download the latest `.unitypackage` from the [Releases](https://github.com/eldemirberkay0/Unity-FlexTimer/releases) page.
 2. Drag and drop it into your project.
 ***
+*It is recommended to set timer references = null when you don't need timer aynmore to prevent unnecessary memory usage.*
+
 *It is recommended to use TimerManager.RemoveAllTimers() while changing scenes to prevent any NullReferenceException errors.*

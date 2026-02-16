@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace FlexTimer
 {
@@ -28,6 +29,7 @@ namespace FlexTimer
         /// <summary> Removes all timers and clears their delegates. Suggested to use while changing scene. </summary>
         public static void RemoveAllTimers()
         {
+            if (timers == null) { return; }
             for (int i = timers.Count - 1; i >= 0; i--)
             {
                 timers[i].Pause();
@@ -36,6 +38,15 @@ namespace FlexTimer
                 timers[i].OnUpdate = null;
             }
             timers.Clear();
+        }
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void EnsureClearOnQuit()
+        {
+            Application.quitting -= RemoveAllTimers;
+            Application.quitting += RemoveAllTimers;
+            Application.quitting -= PlayerLoopUtils.RemoveTimerLoop;
+            Application.quitting += PlayerLoopUtils.RemoveTimerLoop;
         }
     }
 }

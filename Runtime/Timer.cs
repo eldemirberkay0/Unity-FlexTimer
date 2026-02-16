@@ -6,15 +6,15 @@ namespace FlexTimer
     public class Timer
     {
         public float SecondsToTick => Mathf.Clamp(secondsToTick, 0, tickDuration);
-        public float SecondsToFinish => Mathf.Clamp(secondsToTick + (tickCount - 1) * tickDuration, 0, tickDuration * tickCount);
-        public float SecondsToTickNormalized => Mathf.Clamp(secondsToTick / tickDuration, 0, 1);
-        public float SecondsToFinishNormalized => Mathf.Clamp((secondsToTick + (tickCount - 1) * tickDuration) / (tickCount * tickDuration), 0, 1);
-        public int TicksRemaining => tickCount;
+        public float SecondsToFinish => Mathf.Clamp(secondsToTick + ((TicksRemaining - 1) * tickDuration), 0, tickDuration * tickCount);
+        public float TimeToTickNormalized => Mathf.Clamp(SecondsToTick / tickDuration, 0, 1);
+        public float TimeToFinishNormalized => Mathf.Clamp(SecondsToFinish / tickDuration * tickCount, 0, 1);
 
         public Action OnUpdate;
         public Action OnTick;
         public Action OnFinished;
 
+        public int TicksRemaining { get; private set; } = 0;
         public bool IsScaled { get; private set; } = true;
         public bool IsRunning { get; private set; } = false;
         public bool IsLooped { get; private set; } = false;
@@ -47,6 +47,7 @@ namespace FlexTimer
         {
             if (!TimerManager.timers.Contains(this))
             {
+                TicksRemaining = tickCount;
                 secondsToTick = tickDuration;
                 TimerManager.RegisterTimer(this);
                 IsRunning = true;
@@ -66,8 +67,8 @@ namespace FlexTimer
         private void Tick()
         {
             OnTick?.Invoke();
-            tickCount--;
-            if (tickCount <= 0 && !IsLooped)
+            TicksRemaining--;
+            if (TicksRemaining <= 0 && !IsLooped)
             {
                 Finish();
                 return;
@@ -75,14 +76,26 @@ namespace FlexTimer
             secondsToTick = tickDuration;
         }
 
+        /// <summary> Pauses timer and resets tick count and duration. No auto-start. </summary>
+        public void Reset()
+        {
+            Pause();
+            TicksRemaining = tickCount;
+            secondsToTick = tickDuration;
+        }
+
+        /// <summary> Resets timer and starts it afterwards. </summary>
+        public void Restart()
+        {
+            Reset();
+            Start();
+        }
+
         private void Finish()
         {
             TimerManager.RemoveTimer(this);
             IsRunning = false;
-            OnTick = null;
-            OnUpdate = null;
             OnFinished?.Invoke();
-            OnFinished = null;
         }
 
         /// <summary> Stops timer and clears it's references. </summary>
