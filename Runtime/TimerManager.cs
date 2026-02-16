@@ -16,7 +16,7 @@ namespace FlexTimer
         internal static void RegisterTimer(Timer timer) => timers.Add(timer);
         internal static void RemoveTimer(Timer timer) => timers.Remove(timer);
 
-        /// <summary> Creates a timer with an event attached to it and starts timer directly. </summary>
+        /// <summary> Creates a timer with an event attached to it and starts timer directly. Practical use for basic needs. </summary>
         /// <param name="duration"> Duration (second) of each tick. </param>
         /// <param name="action"> Invokes on timer tick. </param>
         /// <param name="isScaled"> Uses Time.unscaledDeltaTime if false. True by default. </param>
@@ -41,12 +41,12 @@ namespace FlexTimer
         }
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-        private static void EnsureClearOnQuit()
+        private static void Initialize()
         {
             Application.quitting -= RemoveAllTimers;
             Application.quitting += RemoveAllTimers;
-            Application.quitting -= PlayerLoopUtils.RemoveTimerLoop;
-            Application.quitting += PlayerLoopUtils.RemoveTimerLoop;
+            Application.quitting -= PlayerLoopHandler.RemoveTimerLoop;
+            Application.quitting += PlayerLoopHandler.RemoveTimerLoop;
         }
     }
 }
