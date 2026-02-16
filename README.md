@@ -48,6 +48,7 @@ While using with constructor you have to use timer.Start() manually to run the t
     {
         if (!TimerManager.timers.Contains(this))
         {
+            TicksRemaining = tickCount;
             secondsToTick = tickDuration;
             TimerManager.RegisterTimer(this);
             IsRunning = true;
@@ -91,7 +92,7 @@ If you just want to trigger an action after a delay you can use TimerManager.Reg
 
 TimerManager.RegisterEvent():
 ```csharp
-    /// <summary> Creates a timer with an event attached to it and starts timer directly. </summary>
+    /// <summary> Creates a timer with an event attached to it and starts timer directly. Practical use for basic needs. </summary>
     /// <param name="duration"> Duration (second) of each tick. </param>
     /// <param name="action"> Invokes on timer tick. </param>
     /// <param name="isScaled"> Uses Time.unscaledDeltaTime if false. True by default. </param>
