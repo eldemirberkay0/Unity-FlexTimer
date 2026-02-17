@@ -19,10 +19,10 @@ namespace FlexTimer
         /// <summary> Creates a timer with an event attached to it and starts timer directly. Practical use for basic needs. </summary>
         /// <param name="duration"> Duration (second) of each tick. </param>
         /// <param name="action"> Invokes on timer tick. </param>
-        /// <param name="isScaled"> Uses Time.unscaledDeltaTime if false. True by default. </param>
-        public static void RegisterEvent(float duration, Action action, bool isScaled = true)
+        /// <param name="attachedTo"> MonoBehavior that timer attaches to. If this MonoBehavior is destroyed, timer will cancel itself. </param>
+        public static void RegisterEvent(float duration, Action action, MonoBehaviour attachedTo = null)
         {
-            Timer timer = new Timer(duration, action, null, null, 1, false, isScaled);
+            Timer timer = new Timer(duration, action, null, null, 1, false, true, attachedTo);
             timer.Start();
         }
 
