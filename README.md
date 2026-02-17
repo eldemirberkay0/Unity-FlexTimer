@@ -51,8 +51,8 @@ While using with constructor you have to use timer.Start() manually to run the t
             TicksRemaining = tickCount;
             secondsToTick = tickDuration;
             TimerManager.RegisterTimer(this);
-            IsRunning = true;
         }
+        IsRunning = true;
     }
 ```
 ***
