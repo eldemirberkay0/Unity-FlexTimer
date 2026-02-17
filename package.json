@@ -21,6 +21,11 @@
       "displayName": "Smooth Cooldown",
       "description": "Example use case for timer's OnUpdate callbacks.",
       "path": "Samples~/SmoothCooldown"
+    },
+    {
+      "displayName": "Attached Timer",
+      "description": "Example usage of timer with interval is attached to a MonoBehaviour.",
+      "path": "Samples~/AttachedTimer"
     }
   ],
   "author": {
