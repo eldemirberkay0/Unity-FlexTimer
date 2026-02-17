@@ -50,8 +50,8 @@ namespace FlexTimer
                 TicksRemaining = tickCount;
                 secondsToTick = tickDuration;
                 TimerManager.RegisterTimer(this);
-                IsRunning = true;
             }
+            IsRunning = true;
         }
 
         internal void Update()
@@ -84,10 +84,26 @@ namespace FlexTimer
             secondsToTick = tickDuration;
         }
 
+        /// <summary> Pauses timer and resets tick count and duration. No auto-start. Sets a new duration. </summary>
+        public void Reset(float newTickDuration)
+        {
+            Pause();
+            tickDuration = newTickDuration;
+            TicksRemaining = tickCount;
+            secondsToTick = tickDuration;
+        }
+
         /// <summary> Resets timer and starts it afterwards. </summary>
         public void Restart()
         {
             Reset();
+            Start();
+        }
+
+        /// <summary> Resets timer and starts it afterwards. Sets a new duration. </summary>
+        public void Restart(float newTickDuration)
+        {
+            Reset(newTickDuration);
             Start();
         }
 
