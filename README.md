@@ -47,6 +47,8 @@ A flexible timer package with zero runtime allocation for Unity running on Unity
 ```
 
 While using with constructor you have to use timer.Start() manually to run the timer.
+
+Timer.Start():
 ```csharp
     // Note: This function is a member of Timer.
     /// <summary> Registers timer to TimerManager and sets IsRunning true. </summary>
@@ -54,7 +56,7 @@ While using with constructor you have to use timer.Start() manually to run the t
     {
         if (!TimerManager.timers.Contains(this))
         {
-            TicksRemaining = tickCount;
+            TicksPassed = 0;
             secondsToTick = tickDuration;
             TimerManager.RegisterTimer(this);
         }
@@ -100,8 +102,9 @@ Example:
     {
         // Create a timer attached to a MonoBehavior so that if MonoBehavior is destroyed, timer cancels itself.
         Timer timer = new Timer(2, () => gameObject.SetActive(false), attachedTo: this);
+        // Starts the timer.
         timer.Start();
-        // If timer won't cancel itself this will throw an MissingReferenceException error.
+        // Destroy the gameObject that the timer is attached to. If the timer were not attached, it would throw a MissingReferenceException error when timer ticked.
         Destroy(gameObject);
     }
 ```
@@ -114,7 +117,7 @@ If you just want to trigger an action after a delay you can use TimerManager.Reg
 TimerManager.RegisterEvent():
 ```csharp
     /// <summary> Creates a timer with an event attached to it and starts timer directly. Practical use for basic needs. </summary>
-    /// <param name="duration"> Duration (second) of each tick. </param>
+    /// <param name="duration"> Duration (second) of timer. </param>
     /// <param name="action"> Invokes on timer tick. </param>
     /// <param name="attachedTo"> MonoBehavior that timer attaches to. If this MonoBehavior is destroyed, timer will cancel itself. </param>
     public static void RegisterEvent(float duration, Action action, MonoBehaviour attachedTo = null)

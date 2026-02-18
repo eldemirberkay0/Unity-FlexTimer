@@ -17,7 +17,7 @@ namespace FlexTimer
         internal static void RemoveTimer(Timer timer) => timers.Remove(timer);
 
         /// <summary> Creates a timer with an event attached to it and starts timer directly. Practical use for basic needs. </summary>
-        /// <param name="duration"> Duration (second) of each tick. </param>
+        /// <param name="duration"> Duration (second) of timer. </param>
         /// <param name="action"> Invokes on timer tick. </param>
         /// <param name="attachedTo"> MonoBehavior that timer attaches to. If this MonoBehavior is destroyed, timer will cancel itself. </param>
         public static void RegisterEvent(float duration, Action action, MonoBehaviour attachedTo = null)
