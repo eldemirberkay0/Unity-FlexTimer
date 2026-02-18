@@ -32,7 +32,7 @@ namespace FlexTimer
         /// <param name="tickCount"> How many times the timer will tick. 1 by default. </param>
         /// <param name="isLooped"> Ticks forever if true. Overrides tickCount if true. False by default. </param>
         /// <param name="isScaled"> Uses Time.unscaledDeltaTime if false. True by default. </param>
-        /// <param name="attachedTo"> MonoBehavior that timer attaches to. If this MonoBehavior is destroyed, timer will cancel itself. </param>
+        /// <param name="attachedTo"> MonoBehaviour that timer attaches to. If this MonoBehaviour is destroyed, timer will cancel itself. </param>
         public Timer(float tickDuration, Action OnTick = null, Action OnFinished = null, Action OnUpdate = null, int tickCount = 1, bool isLooped = false, bool isScaled = true, MonoBehaviour attachedTo = null)
         {
             this.tickDuration = tickDuration;

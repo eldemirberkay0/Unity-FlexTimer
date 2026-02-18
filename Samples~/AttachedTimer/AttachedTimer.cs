@@ -9,7 +9,7 @@ namespace FlexTimer.Samples
 
         void Start()
         {
-            // Create a timer attached to this MonoBehavior so that if MonoBehavior is destroyed, timer cancels itself.
+            // Create a timer attached to this MonoBehaviour so that if MonoBehaviour is destroyed, timer cancels itself.
             timer = new Timer(2, TakeDamage, tickCount: 3, attachedTo: this);
             timer.Start();
         }

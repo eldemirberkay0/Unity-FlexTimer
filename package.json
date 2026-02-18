@@ -2,13 +2,13 @@
   "name": "com.eldemirberkay0.flextimer",
   "version": "1.0.0",
   "displayName": "FlexTimer",
-  "description": "A flexible timer package for Unity running on Unity \nplayer loop, alternative to Coroutines and spagetti \nUpdate() loops.",
+  "description": "A flexible timer package with zero update allocation\nfor Unity running on Unity player loop, alternative to \nCoroutines and messy Update() loops.",
   "unity": "2022.3",
   "keywords": [
     "timer",
     "flex-timer",
     "time-manager",
-    "zero-runtime-allocation",
+    "zero-update-allocation",
     "player-loop"
   ],
   "samples": [

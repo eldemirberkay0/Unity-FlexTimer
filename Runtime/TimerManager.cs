@@ -19,7 +19,7 @@ namespace FlexTimer
         /// <summary> Creates a timer with an event attached to it and starts timer directly. Practical use for basic needs. </summary>
         /// <param name="duration"> Duration (second) of timer. </param>
         /// <param name="action"> Invokes on timer tick. </param>
-        /// <param name="attachedTo"> MonoBehavior that timer attaches to. If this MonoBehavior is destroyed, timer will cancel itself. </param>
+        /// <param name="attachedTo"> MonoBehaviour that timer attaches to. If this MonoBehaviour is destroyed, timer will cancel itself. </param>
         public static void RegisterEvent(float duration, Action action, MonoBehaviour attachedTo = null)
         {
             Timer timer = new Timer(duration, action, null, null, 1, false, true, attachedTo);

@@ -1,8 +1,8 @@
 # Unity-FlexTimer
-A flexible timer package with zero runtime allocation for Unity running on Unity player loop, meaning no MonoBehavior is required. Alternative to Coroutines and spagetti Update() loops with bunch of time variables and if checks.
+A flexible timer package with zero update allocation for Unity running on Unity player loop, meaning no MonoBehaviour is required. Alternative to Coroutines and messy Update() loops with a bunch of time variables and if checks.
 
 ## Includes
-* **TimerManager:** Holds timers in a list and updates them in every frame. Also responsible with some practical event registration.
+* **TimerManager:** Holds timers in a list and updates them in every frame. Also responsible for some practical event registration.
 
 * **Timer:** The actual timer class. Has various properties:
     * OnTick -> Invokes on each timer tick.
@@ -28,7 +28,7 @@ A flexible timer package with zero runtime allocation for Unity running on Unity
     /// <param name="tickCount"> How many times the timer will tick. 1 by default. </param>
     /// <param name="isLooped"> Ticks forever if true. Overrides tickCount if true. False by default. </param>
     /// <param name="isScaled"> Uses Time.unscaledDeltaTime if false. True by default. </param>
-    /// <param name="attachedTo"> MonoBehavior that timer attaches to. If this MonoBehavior is destroyed, timer will cancel itself. </param>
+    /// <param name="attachedTo"> MonoBehaviour that timer attaches to. If this MonoBehaviour is destroyed, timer will cancel itself. </param>
     public Timer(float tickDuration, Action OnTick = null, Action OnFinished = null, Action OnUpdate = null, int tickCount = 1, bool isLooped = false, bool isScaled = true, MonoBehaviour attachedTo = null)
     {
         this.tickDuration = tickDuration;
@@ -94,13 +94,13 @@ After creating:
     }
 ```
 ***
-It is recommended to attach timer to a MonoBheavior if timer's actions have something to do with it. Because if MonoBehavior is destroyed, timer can't access it and this will result with an error.
+Attach timer to a MonoBehaviour if timer's actions have something to do with it. Because if MonoBehaviour is destroyed, timer can't access it and this will result with an error. Or you can call timer.Cancel() manually, which is *a bit* faster.
 
-Example:
+Example (Practical):
 ```csharp
     void Start()
     {
-        // Create a timer attached to a MonoBehavior so that if MonoBehavior is destroyed, timer cancels itself.
+        // Create a timer attached to a MonoBehaviour so that if MonoBehaviour is destroyed, timer cancels itself.
         Timer timer = new Timer(2, () => gameObject.SetActive(false), attachedTo: this);
         // Starts the timer.
         timer.Start();
@@ -108,18 +108,38 @@ Example:
         Destroy(gameObject);
     }
 ```
+Example (Advanced):
+```csharp
+    Timer timer;
+
+    void Start()
+    {
+        // Create the timer that is not attached to a MonoBehaviour, timer.Cancel() should be called manually
+        timer = new Timer(2, () => gameObject.SetActive(false));
+        // Start the timer
+        timer.Start();
+        Destroy(gameObject);
+    }
+
+    // Add timer.Cancel() to OnDestroy to cancel the timer when object is destroyed
+    void OnDestroy()
+    {
+        timer.Cancel();
+    }
+```
+Note that deleting timer reference when you are done with timer is also a good practice.
 
 *There are more examples at [Samples Folder](/Samples~).*
 ***
 ### Using TimerManager for Basic Needs
-If you just want to trigger an action after a delay you can use TimerManager.RegisterEvent(). This function creates a basic timer and starts it directly. This method prevents access to timer and reduces control over timer but it is more practical.
+If you just want to trigger an action once after a delay you can use TimerManager.RegisterEvent(). This function creates a basic timer and starts it directly. This method prevents access to timer and reduces control over timer but it is more practical.
 
 TimerManager.RegisterEvent():
 ```csharp
     /// <summary> Creates a timer with an event attached to it and starts timer directly. Practical use for basic needs. </summary>
     /// <param name="duration"> Duration (second) of timer. </param>
     /// <param name="action"> Invokes on timer tick. </param>
-    /// <param name="attachedTo"> MonoBehavior that timer attaches to. If this MonoBehavior is destroyed, timer will cancel itself. </param>
+    /// <param name="attachedTo"> MonoBehaviour that timer attaches to. If this MonoBehaviour is destroyed, timer will cancel itself. </param>
     public static void RegisterEvent(float duration, Action action, MonoBehaviour attachedTo = null)
     {
         Timer timer = new Timer(duration, action, null, null, 1, false, true, attachedTo);
@@ -156,7 +176,3 @@ There are three ways to install this package into your Unity project:
 ### Option 3: Downloading .unitypackage Release
 1. Download the latest `.unitypackage` from the [Releases](https://github.com/eldemirberkay0/Unity-FlexTimer/releases) page.
 2. Drag and drop it into your project.
-***
-*It is recommended to set timer references = null when you don't need timer aynmore to prevent any unexpected unnecessary memory usage.*
-
-*It is recommended to use TimerManager.RemoveAllTimers() while changing scenes to prevent any NullReferenceException errors.*
