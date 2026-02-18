@@ -20,15 +20,6 @@ A flexible timer package with zero update allocation for Unity running on Unity 
 ### Creating Timer Manually With Constructor
  Using Timer directly with constructor provides more flexibility. You can set many properties as you like or leave them default.
 ```csharp
-    /// <summary> Creates a timer with various parameters. </summary>
-    /// <param name="tickDuration"> Duration (second) of each tick. </param>
-    /// <param name="OnTick"> The action invokes on timer tick. Null by default. </param>
-    /// <param name="OnFinished"> The action invokes when no ticks left. Null by default. </param>
-    /// <param name="OnUpdate"> The action invokes every timer update. Null by default. </param>
-    /// <param name="tickCount"> How many times the timer will tick. 1 by default. </param>
-    /// <param name="isLooped"> Ticks forever if true. Overrides tickCount if true. False by default. </param>
-    /// <param name="isScaled"> Uses Time.unscaledDeltaTime if false. True by default. </param>
-    /// <param name="attachedTo"> MonoBehaviour that timer attaches to. If this MonoBehaviour is destroyed, timer will cancel itself. </param>
     public Timer(float tickDuration, Action OnTick = null, Action OnFinished = null, Action OnUpdate = null, int tickCount = 1, bool isLooped = false, bool isScaled = true, MonoBehaviour attachedTo = null)
     {
         this.tickDuration = tickDuration;
@@ -50,8 +41,6 @@ While using with constructor you have to use timer.Start() manually to run the t
 
 Timer.Start():
 ```csharp
-    // Note: This function is a member of Timer.
-    /// <summary> Registers timer to TimerManager and sets IsRunning true. </summary>
     public void Start()
     {
         if (!TimerManager.timers.Contains(this))
@@ -68,12 +57,10 @@ You can attach actions while creating the timer or later.
 
 While creating:
 ```csharp
-    // Create a timer with a duration of 2 seconds and an action attached to it.
     Timer timer = new Timer(2, () => Debug.Log("Ticked")); 
 
     void Start()
     { 
-        // Start the timer
         timer.Start();
         // Logs "Ticked" after 2 seconds
     }
@@ -81,14 +68,11 @@ While creating:
 
 After creating:
 ```csharp
-    // Create a timer with a duration of 2 seconds and no actions attached
     Timer timer = new Timer(2);
 
     void Start()
     {
-        // Add an action to timer's OnTick
         timer.OnTick += () => Debug.Log("Ticked"); 
-        // Starts the timer
         timer.Start();
         // Logs "Ticked" after 2 seconds
     }
@@ -100,11 +84,9 @@ Example (Practical):
 ```csharp
     void Start()
     {
-        // Create a timer attached to a MonoBehaviour so that if MonoBehaviour is destroyed, timer cancels itself.
         Timer timer = new Timer(2, () => gameObject.SetActive(false), attachedTo: this);
-        // Starts the timer.
         timer.Start();
-        // Destroy the gameObject that the timer is attached to. If the timer were not attached, it would throw a MissingReferenceException error when timer ticked.
+        // If the timer were not attached, it would throw a MissingReferenceException error when timer ticked.
         Destroy(gameObject);
     }
 ```
@@ -114,9 +96,7 @@ Example (Advanced):
 
     void Start()
     {
-        // Create the timer that is not attached to a MonoBehaviour, timer.Cancel() should be called manually
         timer = new Timer(2, () => gameObject.SetActive(false));
-        // Start the timer
         timer.Start();
         Destroy(gameObject);
     }
@@ -136,10 +116,6 @@ If you just want to trigger an action once after a delay you can use TimerManage
 
 TimerManager.RegisterEvent():
 ```csharp
-    /// <summary> Creates a timer with an event attached to it and starts timer directly. Practical use for basic needs. </summary>
-    /// <param name="duration"> Duration (second) of timer. </param>
-    /// <param name="action"> Invokes on timer tick. </param>
-    /// <param name="attachedTo"> MonoBehaviour that timer attaches to. If this MonoBehaviour is destroyed, timer will cancel itself. </param>
     public static void RegisterEvent(float duration, Action action, MonoBehaviour attachedTo = null)
     {
         Timer timer = new Timer(duration, action, null, null, 1, false, true, attachedTo);
