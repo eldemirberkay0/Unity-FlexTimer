@@ -50,6 +50,7 @@ namespace FlexTimer
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         private static void Initialize()
         {
+            RemoveAllTimers();
             Application.quitting -= RemoveAllTimers;
             Application.quitting += RemoveAllTimers;
             Application.quitting -= PlayerLoopHandler.RemoveTimerLoop;

@@ -10,6 +10,7 @@ namespace FlexTimer
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         private static void InsertTimerLoop()
         {
+            RemoveTimerLoop();
             var currentPlayerLoop = PlayerLoop.GetCurrentPlayerLoop();
 
             var timerSystem = new PlayerLoopSystem
