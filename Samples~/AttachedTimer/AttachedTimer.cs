@@ -9,8 +9,8 @@ namespace FlexTimer.Samples
 
         void Start()
         {
-            // Create a timer attached to this MonoBehaviour so that if MonoBehaviour is destroyed, timer cancels itself.
-            timer = new Timer(2, TakeDamage, tickCount: 3, attachedTo: this);
+            // Create a timer attached to this GameObject so that if GameObject is destroyed, timer cancels itself.
+            timer = new Timer(2, TakeDamage, tickCount: 3, attachedTo: this.gameObject);
             timer.Start();
         }
 

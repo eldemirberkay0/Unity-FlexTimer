@@ -78,13 +78,13 @@ After creating:
     }
 ```
 ***
-Attach timer to a MonoBehaviour if timer's actions have something to do with it. Because if MonoBehaviour is destroyed, timer can't access it and this will result with an error. Or you can call timer.Cancel() manually, which is *a bit* faster.
+Attach timer to a GameObject if timer's actions have something to do with it. Because if Gameobject is destroyed, timer can't access it and this will result with an error. Or you can call timer.Cancel() manually when object is destroyed (avoids checking if attachedObject is destroyed on every update).
 
 Example (Practical):
 ```csharp
     void Start()
     {
-        Timer timer = new Timer(2, () => gameObject.SetActive(false), attachedTo: this);
+        Timer timer = new Timer(2, () => gameObject.SetActive(false), attachedTo: this.gameObject);
         timer.Start();
         // If the timer were not attached, it would throw a MissingReferenceException error when timer ticked.
         Destroy(gameObject);
@@ -112,7 +112,7 @@ Note that deleting timer reference when you are done with timer is also a good p
 *There are more examples at [Samples Folder](/Samples~).*
 ***
 ### Using TimerManager for Basic Needs
-If you just want to trigger an action once after a delay you can use TimerManager.RegisterEvent(). This function creates a basic timer and starts it directly. This method prevents access to timer and reduces control over timer but it is more practical.
+If you just want to trigger an action once after a delay you can use TimerManager.RegisterEvent(). This function creates a basic timer and starts it directly. This method is just a wrapper and designed for practical use.
 
 TimerManager.RegisterEvent():
 ```csharp
@@ -148,7 +148,3 @@ There are three ways to install this package into your Unity project:
 ```json
 "com.eldemirberkay0.flextimer": "https://github.com/eldemirberkay0/Unity-FlexTimer.git"
 ```
-
-### Option 3: Downloading .unitypackage Release
-1. Download the latest `.unitypackage` from the [Releases](https://github.com/eldemirberkay0/Unity-FlexTimer/releases) page.
-2. Drag and drop it into your project.

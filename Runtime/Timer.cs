@@ -22,7 +22,8 @@ namespace FlexTimer
         private int tickCount;
         private float tickDuration;
         private float secondsToTick;
-        private MonoBehaviour attachedTo;
+        private GameObject attachedTo;
+        private bool isAttached = false;
 
         /// <summary> Creates a timer with various parameters. </summary>
         /// <param name="tickDuration"> Duration (second) of each tick. </param>
@@ -32,8 +33,8 @@ namespace FlexTimer
         /// <param name="tickCount"> How many times the timer will tick. 1 by default. </param>
         /// <param name="isLooped"> Ticks forever if true. Overrides tickCount if true. False by default. </param>
         /// <param name="isScaled"> Uses Time.unscaledDeltaTime if false. True by default. </param>
-        /// <param name="attachedTo"> MonoBehaviour that timer attaches to. If this MonoBehaviour is destroyed, timer will cancel itself. </param>
-        public Timer(float tickDuration, Action OnTick = null, Action OnFinished = null, Action OnUpdate = null, int tickCount = 1, bool isLooped = false, bool isScaled = true, MonoBehaviour attachedTo = null)
+        /// <param name="attachedTo"> GameObject that timer attaches to. If this Object is destroyed, timer will cancel itself. </param>
+        public Timer(float tickDuration, Action OnTick = null, Action OnFinished = null, Action OnUpdate = null, int tickCount = 1, bool isLooped = false, bool isScaled = true, GameObject attachedTo = null)
         {
             this.tickDuration = tickDuration;
             this.OnTick += OnTick;
@@ -45,7 +46,7 @@ namespace FlexTimer
             if (attachedTo != null)
             {
                 this.attachedTo = attachedTo;
-                this.OnUpdate += CheckAttachedObject;
+                isAttached = true;
             }
         }
 
@@ -63,12 +64,15 @@ namespace FlexTimer
 
         internal void Update()
         {
-            if (IsRunning)
+            if (isAttached && attachedTo == null)
             {
-                secondsToTick -= IsScaled ? Time.deltaTime : Time.unscaledDeltaTime;
-                OnUpdate?.Invoke();
-                if (secondsToTick <= 0) { Tick(); }
+                Cancel();
+                return;
             }
+
+            secondsToTick -= IsScaled ? Time.deltaTime : Time.unscaledDeltaTime;
+            OnUpdate?.Invoke();
+            if (secondsToTick <= 0) { Tick(); }
         }
 
         private void Tick()
@@ -116,7 +120,6 @@ namespace FlexTimer
 
         private void Finish()
         {
-            TimerManager.RemoveTimer(this);
             IsRunning = false;
             OnFinished?.Invoke();
         }
@@ -124,19 +127,18 @@ namespace FlexTimer
         /// <summary> Stops timer and clears it's references. </summary>
         public void Cancel()
         {
-            TimerManager.RemoveTimer(this);
             IsRunning = false;
             OnTick = null;
             OnUpdate = null;
             OnFinished = null;
         }
 
-        private void CheckAttachedObject()
+        public void Resume()
         {
-            if (attachedTo == null) { Cancel(); }
+            if (!TimerManager.timers.Contains(this)) { TimerManager.RegisterTimer(this); }
+            IsRunning = true;
         }
 
         public void Pause() => IsRunning = false;
-        public void Resume() => IsRunning = true;
     }
 }

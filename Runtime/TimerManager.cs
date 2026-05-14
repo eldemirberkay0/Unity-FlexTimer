@@ -10,17 +10,24 @@ namespace FlexTimer
 
         internal static void UpdateTimers()
         {
-            for (int i = timers.Count - 1; i >= 0; i--) { timers[i].Update(); }
+            for (int i = timers.Count - 1; i >= 0; i--)
+            {
+                if (!timers[i].IsRunning)
+                {
+                    timers.RemoveAt(i);
+                    continue;
+                }
+                timers[i].Update();
+            }
         }
 
         internal static void RegisterTimer(Timer timer) => timers.Add(timer);
-        internal static void RemoveTimer(Timer timer) => timers.Remove(timer);
 
         /// <summary> Creates a timer with an event attached to it and starts timer directly. Practical use for basic needs. </summary>
         /// <param name="duration"> Duration (second) of timer. </param>
         /// <param name="action"> Invokes on timer tick. </param>
-        /// <param name="attachedTo"> MonoBehaviour that timer attaches to. If this MonoBehaviour is destroyed, timer will cancel itself. </param>
-        public static void RegisterEvent(float duration, Action action, MonoBehaviour attachedTo = null)
+        /// <param name="attachedTo"> GameObject that timer attaches to. If this Object is destroyed, timer will cancel itself. </param>
+        public static void RegisterEvent(float duration, Action action, GameObject attachedTo = null)
         {
             Timer timer = new Timer(duration, action, null, null, 1, false, true, attachedTo);
             timer.Start();
