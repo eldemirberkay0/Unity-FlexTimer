@@ -116,10 +116,11 @@ If you want to trigger an action once after a delay you can use TimerManager.Reg
 
 TimerManager.RegisterEvent():
 ```csharp
-    public static void RegisterEvent(float duration, Action action, MonoBehaviour attachedTo = null)
+    public static Timer RegisterEvent(float duration, Action action, MonoBehaviour attachedTo = null)
     {
         Timer timer = new Timer(duration, action, null, null, 1, false, true, attachedTo);
         timer.Start();
+        return timer;
     }
 ```
 
@@ -133,7 +134,7 @@ Example:
 ```
 
 ## How to Install
-There are three ways to install this package into your Unity project:
+There are two ways to install this package into your Unity project:
 
 ### Option 1: Via Unity Package Manager (UPM)
 1. Open your Unity project.

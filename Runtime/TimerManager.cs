@@ -23,14 +23,15 @@ namespace FlexTimer
 
         internal static void RegisterTimer(Timer timer) => timers.Add(timer);
 
-        /// <summary> Creates a timer with an event attached to it and starts timer directly. Practical use for basic needs. </summary>
+        /// <summary> Creates a timer with an event attached to it and starts timer directly. Practical use for quick needs. </summary>
         /// <param name="duration"> Duration (second) of timer. </param>
         /// <param name="action"> Invokes on timer tick. </param>
         /// <param name="attachedTo"> GameObject that timer attaches to. If this Object is destroyed, timer will cancel itself. </param>
-        public static void RegisterEvent(float duration, Action action, GameObject attachedTo = null)
+        public static Timer RegisterEvent(float duration, Action action, GameObject attachedTo = null)
         {
             Timer timer = new Timer(duration, action, null, null, 1, false, true, attachedTo);
             timer.Start();
+            return timer;
         }
 
         /// <summary> Removes all timers and clears their delegates. Suggested to use while changing scene. </summary>
