@@ -17,7 +17,7 @@ A flexible timer package with zero update allocation for Unity running on Unity 
     * And more to get timer's current situation like SecondsToTick, SecondsToFinish and normalized versions of these.
 
 ## How to Use
-### Creating Timer Manually With Constructor
+### Creating Timer With Constructor
  Using Timer directly with constructor provides more flexibility. You can set many properties as you like or leave them default.
 ```csharp
     public Timer(float tickDuration, Action OnTick = null, Action OnFinished = null, Action OnUpdate = null, int tickCount = 1, bool isLooped = false, bool isScaled = true, MonoBehaviour attachedTo = null)
@@ -32,12 +32,12 @@ A flexible timer package with zero update allocation for Unity running on Unity 
         if (attachedTo != null)
         {
             this.attachedTo = attachedTo;
-            this.OnUpdate += CheckAttachedObject;
+            isAttached = true;
         }
     }
 ```
 
-While using with constructor you have to use timer.Start() manually to run the timer.
+While using with constructor you have to use timer.Start() to run the timer.
 
 Timer.Start():
 ```csharp
@@ -52,7 +52,7 @@ Timer.Start():
         IsRunning = true;
     }
 ```
-***
+
 You can attach actions while creating the timer or later.
 
 While creating:
@@ -111,8 +111,8 @@ Note that deleting timer reference when you are done with timer is also a good p
 
 *There are more examples at [Samples Folder](/Samples~).*
 ***
-### Using TimerManager for Basic Needs
-If you just want to trigger an action once after a delay you can use TimerManager.RegisterEvent(). This function creates a basic timer and starts it directly. This method is just a wrapper and designed for practical use.
+### Using TimerManager for Quick Needs
+If you want to trigger an action once after a delay you can use TimerManager.RegisterEvent(). This function creates a basic timer and starts it directly. This method is just a wrapper and designed for practical use.
 
 TimerManager.RegisterEvent():
 ```csharp
@@ -131,6 +131,7 @@ Example:
         TimerManager.RegisterEvent(2, () => Debug.Log("Ticked"));
     } 
 ```
+
 ## How to Install
 There are three ways to install this package into your Unity project:
 
