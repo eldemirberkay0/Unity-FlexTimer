@@ -20,7 +20,7 @@ A flexible timer package with zero update allocation for Unity running on Unity 
 ### Creating Timer With Constructor
  Using Timer directly with constructor provides more flexibility. You can set many properties as you like or leave them default.
 ```csharp
-    public Timer(float tickDuration, Action OnTick = null, Action OnFinished = null, Action OnUpdate = null, int tickCount = 1, bool isLooped = false, bool isScaled = true, MonoBehaviour attachedTo = null)
+    public Timer(float tickDuration, Action OnTick = null, Action OnFinished = null, Action OnUpdate = null, int tickCount = 1, bool isLooped = false, bool isScaled = true, GameObject attachedTo = null)
     {
         this.tickDuration = tickDuration;
         this.OnTick += OnTick;

@@ -19,6 +19,8 @@ namespace FlexTimer
         public bool IsRunning { get; private set; } = false;
         public bool IsLooped { get; private set; } = false;
 
+        internal bool isRegistered = false;
+
         private int tickCount;
         private float tickDuration;
         private float secondsToTick;
@@ -53,11 +55,12 @@ namespace FlexTimer
         /// <summary> Registers timer to TimerManager and sets IsRunning true. </summary>
         public void Start()
         {
-            if (!TimerManager.timers.Contains(this))
+            if (!isRegistered)
             {
                 TicksPassed = 0;
                 secondsToTick = tickDuration;
                 TimerManager.RegisterTimer(this);
+                isRegistered = true;
             }
             IsRunning = true;
         }
@@ -135,7 +138,7 @@ namespace FlexTimer
 
         public void Resume()
         {
-            if (!TimerManager.timers.Contains(this)) { TimerManager.RegisterTimer(this); }
+            if (!isRegistered) { TimerManager.RegisterTimer(this); }
             IsRunning = true;
         }
 

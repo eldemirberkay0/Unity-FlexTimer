@@ -14,6 +14,7 @@ namespace FlexTimer
             {
                 if (!timers[i].IsRunning)
                 {
+                    timers[i].isRegistered = false;
                     timers.RemoveAt(i);
                     continue;
                 }
