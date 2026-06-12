@@ -15,7 +15,8 @@ namespace FlexTimer
                 if (!timers[i].IsRunning)
                 {
                     timers[i].isRegistered = false;
-                    timers.RemoveAt(i);
+                    timers[i] = timers[timers.Count - 1];
+                    timers.RemoveAt(timers.Count - 1);
                     continue;
                 }
                 timers[i].Update();
