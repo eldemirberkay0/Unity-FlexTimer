@@ -43,11 +43,12 @@ Timer.Start():
 ```csharp
     public void Start()
     {
-        if (!TimerManager.timers.Contains(this))
+        if (!isRegistered)
         {
             TicksPassed = 0;
             secondsToTick = tickDuration;
             TimerManager.RegisterTimer(this);
+            isRegistered = true;
         }
         IsRunning = true;
     }
