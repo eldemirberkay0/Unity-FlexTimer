@@ -1,7 +1,7 @@
 {
-  "name": "com.eldemirberkay0.flextimer",
+  "name": "com.eldemirberkay0.flex-timer",
   "version": "1.0.0",
-  "displayName": "FlexTimer",
+  "displayName": "Flex Timer",
   "description": "A flexible timer package with zero update allocation\nfor Unity running on Unity player loop, alternative to \nCoroutines and messy Update() loops.",
   "unity": "2022.3",
   "keywords": [
